@@ -19,17 +19,40 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        getActivity()?.setTitle("Movies");
         root =  inflater.inflate(R.layout.fragment_home, container, false)
         setHasOptionsMenu(true)
         recyclerView = root.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = GridLayoutManager(context,1)
           val adapter = CustomAdapter(myFatabaseService.getAllContacts(), object :CustomAdapter.MyListener{
               override fun delete(position: Int, item: Movie) {
-                  findNavController().navigate(R.id.deleteFragment)
+                  val id = item.id
+                  val title = item.title
+                  val authors = item.authors
+                  val about = item.comment
+                  val date = item.date
+                  val bundle = Bundle()
+                  bundle.putInt("id",id!!.toInt())
+                  bundle.putString("title",title)
+                  bundle.putString("authors",authors)
+                  bundle.putString("about",about)
+                  bundle.putString("date",date)
+                  findNavController().navigate(R.id.deleteFragment,bundle)
               }
 
               override fun edit(position: Int, item: Movie) {
-                  findNavController().navigate(R.id.editFragment)
+                  val id = item.id
+                  val title = item.title
+                  val authors = item.authors
+                  val about = item.comment
+                  val date = item.date
+                  val bundle = Bundle()
+                  bundle.putInt("id",id!!.toInt())
+                  bundle.putString("title",title)
+                  bundle.putString("authors",authors)
+                  bundle.putString("about",about)
+                  bundle.putString("date",date)
+                  findNavController().navigate(R.id.editFragment, bundle)
               }
           })
         recyclerView.adapter = adapter
@@ -38,6 +61,7 @@ class HomeFragment : Fragment() {
     }
     override fun onAttach(context: Context) {
         super.onAttach(context)
+
         myFatabaseService = MyFatabaseService(context)
 
     }

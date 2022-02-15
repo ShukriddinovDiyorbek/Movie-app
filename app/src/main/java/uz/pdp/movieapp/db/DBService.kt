@@ -6,4 +6,8 @@ interface DBService {
     fun addContact(movie: Movie)
 
     fun getAllContacts():ArrayList<Movie>
+
+    fun updateContact(movie: Movie): Int
+
+    fun deleteContact(movie: Movie)
 }

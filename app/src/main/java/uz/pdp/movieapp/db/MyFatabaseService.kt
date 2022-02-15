@@ -42,12 +42,30 @@ class MyFatabaseService(context: Context) :
                 val title = cursor.getString(1)
                 val author = cursor.getString(2)
                 val comment = cursor.getString(3)
-                val date = cursor.getString(5)
+                val date = cursor.getString(4)
 
                 val movie = Movie(id,title,author,comment,date)
                 movies.add(movie)
             }while (cursor.moveToNext())
         }
         return movies
+    }
+
+    override fun updateContact(movie: Movie):Int {
+        val database = this.writableDatabase
+        val contentValues = ContentValues()
+        contentValues.put(Constant.MOVIE_TITLE, movie.title)
+        contentValues.put(Constant.AUTHORS, movie.authors)
+        contentValues.put(Constant.COMMENT, movie.comment)
+        contentValues.put(Constant.DATE, movie.date)
+        return database.update(Constant.TABLE_NAME,contentValues,"${Constant.ID} = ?", arrayOf("${movie.id}"))
+    }
+
+    override fun deleteContact(movie: Movie) {
+        val database = this.writableDatabase
+        database.delete(Constant.TABLE_NAME,"${Constant.ID} =?", arrayOf("${movie.id}"))
+        //val query = "delete from ${Constant.TABLE_NAME} where id=${movie.id}"
+        //database.execSQL(query)
+        database.close()
     }
 }
