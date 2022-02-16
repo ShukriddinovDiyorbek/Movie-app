@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import uz.pdp.movieapp.adapter.CustomAdapter
 import uz.pdp.movieapp.db.MyFatabaseService
 import uz.pdp.movieapp.model.Movie
@@ -41,12 +42,9 @@ class DeleteFragment : Fragment() {
             authors1.setText("Authors: " + authors)
             about1.setText("About movie: " + about)
             date1.setText("Date: " + date)
-            val movie = Movie(idBoundle,title.toString(),authors.toString(),about.toString(),date.toString())
             close_btn1.setOnClickListener {
-                myFatabaseService.deleteContact(movie)
 
-                Toast.makeText(context, "Deleted successfully", Toast.LENGTH_SHORT).show()
-                getActivity()?.onBackPressed();
+                findNavController().popBackStack()
             }
         }
         return root

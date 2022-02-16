@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
@@ -30,6 +31,9 @@ class CustomAdapter(var items: ArrayList<Movie>, val myListener: MyListener) :
         holder.delete_btn.setOnClickListener {
             myListener.delete(position, item)
         }
+        holder.item_linear.setOnClickListener {
+            myListener.show(position,item)
+        }
     }
 
     override fun getItemCount(): Int {
@@ -42,6 +46,7 @@ class CustomAdapter(var items: ArrayList<Movie>, val myListener: MyListener) :
         val tv_date: TextView
         val edit_btn: Button
         val delete_btn: Button
+        val item_linear: LinearLayout
 
         init {
             tv_author = view.findViewById(R.id.tv_authors)
@@ -49,11 +54,13 @@ class CustomAdapter(var items: ArrayList<Movie>, val myListener: MyListener) :
             tv_date = view.findViewById(R.id.tv_date)
             edit_btn = view.findViewById(R.id.edit_btn)
             delete_btn = view.findViewById(R.id.delete_btn)
+            item_linear = view.findViewById(R.id.item_linear)
         }
     }
 
     interface MyListener {
         fun edit(position: Int, item: Movie)
         fun delete(position: Int, item: Movie)
+        fun show(position: Int,item: Movie)
     }
 }

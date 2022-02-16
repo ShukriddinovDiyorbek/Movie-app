@@ -3,6 +3,7 @@ package uz.pdp.movieapp
 import android.content.Context
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -15,6 +16,7 @@ class HomeFragment : Fragment() {
     lateinit var root: View
     lateinit var myFatabaseService: MyFatabaseService
     lateinit var recyclerView: RecyclerView
+    lateinit var adapter: CustomAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -24,8 +26,16 @@ class HomeFragment : Fragment() {
         setHasOptionsMenu(true)
         recyclerView = root.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = GridLayoutManager(context,1)
-          val adapter = CustomAdapter(myFatabaseService.getAllContacts(), object :CustomAdapter.MyListener{
+          adapter = CustomAdapter(myFatabaseService.getAllContacts(), object :CustomAdapter.MyListener{
               override fun delete(position: Int, item: Movie) {
+                  myFatabaseService.deleteContact(item)
+                  adapter.items.removeAt(position)
+                  adapter.notifyItemRemoved(position)
+                  adapter.notifyDataSetChanged()
+                  Toast.makeText(context, "Deleted successfully", Toast.LENGTH_SHORT).show()
+              }
+
+              override fun show(position: Int, item: Movie) {
                   val id = item.id
                   val title = item.title
                   val authors = item.authors
