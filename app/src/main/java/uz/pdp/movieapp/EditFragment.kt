@@ -42,11 +42,18 @@ class EditFragment : Fragment() {
             et_date.setText(date)
 
             change_btn.setOnClickListener {
-                if (et_title.text.length > 0 && et_authors.text.length > 0 && et_about.text.length > 0 && et_date.text.length > 0) {
-                    val title1 = et_title.text.toString()
-                    val authors1 = et_authors.text.toString()
-                    val about1 = et_about.text.toString()
-                    val date1 = et_date.text.toString()
+
+                val s5 = et_title.text.trim(' ').isNotEmpty()
+                val s6 = et_authors.text.trim(' ').isNotEmpty()
+                val s7 = et_about.text.trim(' ').isNotEmpty()
+                val s8 = et_date.text.trim(' ').isNotEmpty()
+                if ( s5 && s6 && s7 && s8 &&
+                    et_title.text.isNotEmpty() && et_authors.text.isNotEmpty() &&
+                    et_about.text.isNotEmpty() && et_date.text.isNotEmpty()) {
+                    val title1 = et_title.text.trim().toString()
+                    val authors1 = et_authors.text.trim().toString()
+                    val about1 = et_about.text.trim().toString()
+                    val date1 = et_date.text.trim().toString()
 
                     val movie = Movie(idbundle,title1, authors1, about1, date1)
                     if(myFatabaseService.updateContact(movie) != -1) {
@@ -63,11 +70,17 @@ class EditFragment : Fragment() {
             getActivity()?.setTitle("Add movie");
             change_btn.setText("Save")
             change_btn.setOnClickListener {
-                if (et_title.text.length > 0 && et_authors.text.length > 0 && et_about.text.length > 0 && et_date.text.length > 0) {
-                    val title = et_title.text.toString()
-                    val authors = et_authors.text.toString()
-                    val about = et_about.text.toString()
-                    val date = et_date.text.toString()
+                val s5 = et_title.text.trim(' ').isNotEmpty()
+                val s6 = et_authors.text.trim(' ').isNotEmpty()
+                val s7 = et_about.text.trim(' ').isNotEmpty()
+                val s8 = et_date.text.trim(' ').isNotEmpty()
+                if ( s5 && s6 && s7 && s8 &&
+                    et_title.text.isNotEmpty() && et_authors.text.isNotEmpty() &&
+                    et_about.text.isNotEmpty() && et_date.text.isNotEmpty()) {
+                    val title = et_title.text.trim().toString()
+                    val authors = et_authors.text.trim().toString()
+                    val about = et_about.text.trim().toString()
+                    val date = et_date.text.trim().toString()
                     val movie = Movie(title, authors, about, date)
                     myFatabaseService.addContact(movie)
                     Toast.makeText(context, "Successfully", Toast.LENGTH_SHORT).show()
